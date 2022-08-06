@@ -1,10 +1,20 @@
 #include <windows.h>
 #include <gl/gl.h>
+#include <math.h>
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
 void DisableOpenGL(HWND, HDC, HGLRC);
 
+void ShowObj()
+{
+    glBegin(GL_TRIANGLES);
+        glColor3f(0,0,0); glVertex2f(0,0);
+        glColor3f(1,0,0); glVertex2f(0.5,0);
+        glColor3f(0,1,0); glVertex2f(0,0.5);
+    glEnd();
+
+}
 
 int WINAPI WinMain(HINSTANCE hInstance,
                    HINSTANCE hPrevInstance,
@@ -44,8 +54,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
                           WS_OVERLAPPEDWINDOW,
                           CW_USEDEFAULT,
                           CW_USEDEFAULT,
-                          256,
-                          256,
+                          640,
+                          640,
                           NULL,
                           NULL,
                           hInstance,
@@ -77,21 +87,20 @@ int WINAPI WinMain(HINSTANCE hInstance,
         {
             /* OpenGL animation code goes here */
 
-            glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+            glClearColor(0.7f, 1.0f, 0.7f, 0.0f);
             glClear(GL_COLOR_BUFFER_BIT);
+            glLoadIdentity();
+            glScalef(0.5, 0.5, 1);
 
-            glPushMatrix();
-            glRotatef(theta, 0.0f, 0.0f, 1.0f);
+            for (int i = 0; i < 7; i++)
+            {
+                glPushMatrix();
+                glRotatef(45 * i, 0, 0, 1);
+                glTranslatef(0.5, 0, 0);
+                ShowObj();
+                glPopMatrix();
+            }
 
-            glBegin(GL_TRIANGLES);
-
-                glColor3f(1.0f, 0.0f, 0.0f);   glVertex2f(0.0f,   1.0f);
-                glColor3f(0.0f, 1.0f, 0.0f);   glVertex2f(0.87f,  -0.5f);
-                glColor3f(0.0f, 0.0f, 1.0f);   glVertex2f(-0.87f, -0.5f);
-
-            glEnd();
-
-            glPopMatrix();
 
             SwapBuffers(hDC);
 
