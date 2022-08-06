@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1659811996 source:e:\gl\opengl\sapper\sapperopengl\main.c
+	<windows.h>
+	<gl/gl.h>
+
